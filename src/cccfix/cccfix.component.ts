@@ -4,9 +4,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouteConfig, Router } from '@angular/router-deprecated';
 
-import { AppState } from './app.service';
-import { Home } from './home';
-import { RouterActive } from './router-active';
+import { AppState } from './cccfix.service';
+// import { Home } from './home';
+// import { RouterActive } from './router-active';
 
 /*
  * App Component
