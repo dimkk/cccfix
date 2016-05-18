@@ -71,6 +71,7 @@ interface ErrorConstructor extends ErrorStackTraceLimit {}
 interface NodeModule extends WebpackModule {}
 interface Global extends GlobalEnvironment  {}
 
+interface Window { onYouTubeIframeAPIReady: any; }
 
 declare namespace Reflect {
   function decorate(decorators: ClassDecorator[], target: Function): Function;

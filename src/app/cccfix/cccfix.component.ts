@@ -18,7 +18,7 @@ import { captionsEditor } from './captionsEditor/captionsEditor.component';
 @Component({
   selector: 'cccfix',
   pipes: [ ],
-  providers: [ cccfixData, cccfixState ],
+  providers: [ cccfixData ],
   directives: [ videoContainer, captionsEditor ],
   styles: [
     require('./cccfix.css')

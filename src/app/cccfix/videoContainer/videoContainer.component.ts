@@ -7,6 +7,9 @@ import { Component } from '@angular/core';
 // import { Home } from './home';
 // import { RouterActive } from './router-active';
 
+import { cccfixState } from '../services/cccfix.state';
+import { ytVideo } from './ytVideo/ytVideo.component';
+
 /*
  * App Component
  * Top Level Component
@@ -15,24 +18,27 @@ import { Component } from '@angular/core';
   selector: 'video-container',
   pipes: [ ],
   providers: [  ],
-  directives: [ ],
+  directives: [ ytVideo ],
   styles: [
     require('./videoContainer.css')
   ],
   template:require('./videoContainer.html')
 })
 export class videoContainer {
-  loading = true;
-
+  videoLoading = false;
+  ytCode:string;
   constructor(
+    private state:cccfixState
     ) {
-
+      this.ytCode = state.currentYtCode;
   }
 
   ngOnInit() {
     console.log('hello from cccfix videocontainer');
   }
-
+  processYtCode(code:string) {
+    this.ytCode = code;
+  }
 }
 
 /*

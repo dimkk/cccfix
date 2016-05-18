@@ -9,7 +9,7 @@
         <md-input
           placeholder="Submit Local State to App State"
           [value]="localState.value"
-          (input)="localState.value = $event.target.value"
+          (keyup)="localState.value = $event.target.value"
           autofocus>
         </md-input>
 
@@ -23,7 +23,6 @@
       -->
 
       <pre>this.localState = {{ localState | json }}</pre>
-      gyi
     </md-card-content>
   </md-card>
 

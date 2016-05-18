@@ -10,6 +10,8 @@ import { cccfixApp } from './cccfix';
 
 import { RouterActive } from './router-active';
 
+import { cccfixState } from './cccfix/services/cccfix.state';
+
 /*
  * App Component
  * Top Level Component
@@ -17,7 +19,7 @@ import { RouterActive } from './router-active';
 @Component({
   selector: 'app',
   pipes: [ ],
-  providers: [ ],
+  providers: [ cccfixState ],
   directives: [ RouterActive ],
   encapsulation: ViewEncapsulation.None,
   styles: [
@@ -44,7 +46,7 @@ import { RouterActive } from './router-active';
 
       <router-outlet></router-outlet>
 
-      <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
+      <pre class="app-state">cccfix = {{ cccfix | json }}</pre>
 
       <footer>
         <img [src]="angularclassLogo" width="6%">
@@ -66,12 +68,14 @@ export class App {
   url = 'https://twitter.com/AngularClass';
 
   constructor(
-    public appState: AppState) {
+    public appState: AppState,
+    public cccfix: cccfixState
+    ) {
 
   }
 
   ngOnInit() {
-    console.log('Initial App State', this.appState.state);
+    console.log('Initial cccfix State', this.cccfix);
   }
 
 }
