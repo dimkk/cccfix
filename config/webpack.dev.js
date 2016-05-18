@@ -10,6 +10,7 @@ const commonConfig = require('./webpack.common.js'); // the settings that are co
  * Webpack Plugins
  */
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 
 /**
  * Webpack Constants
@@ -50,7 +51,8 @@ module.exports = webpackMerge(commonConfig, {
    * See: http://webpack.github.io/docs/configuration.html#devtool
    * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
    */
-  devtool: 'cheap-module-source-map',
+  //devtool: 'cheap-module-source-map',
+   devtool: 'source-map',
 
   /**
    * Options affecting the output of the compilation.
@@ -88,6 +90,15 @@ module.exports = webpackMerge(commonConfig, {
      * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
      */
     chunkFilename: '[id].chunk.js'
+    //path: root('__build__'),
+    //filename: '[name].js',
+    // filename: '[name].[hash].js',
+    //sourceMapFilename: '[name].js.map',
+    //chunkFilename: '[id].chunk.js',
+    // publicPath: 'http://mycdn.com/'
+    // devtoolModuleFilenameTemplate: function(info){
+    //   return "file:///"+info.absoluteResourcePath;
+    // }
 
   },
 
@@ -111,7 +122,8 @@ module.exports = webpackMerge(commonConfig, {
         'NODE_ENV': JSON.stringify(METADATA.ENV),
         'HMR': METADATA.HMR,
       }
-    })
+    }),
+    new WriteFilePlugin()
   ],
 
   /**

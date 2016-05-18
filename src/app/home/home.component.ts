@@ -40,6 +40,7 @@ export class Home {
 
   submitState(value) {
     console.log('submitState', value);
+    console.log('ggyu');
     this.appState.set('value', value);
     this.localState.value = '';
   }
