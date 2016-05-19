@@ -1,19 +1,6 @@
-/*
- * Angular 2 decorators and services
- */
-import { Component } from '@angular/core';
-
-//import { cccfixService } from '../cccfix.service';
-// import { Home } from './home';
-// import { RouterActive } from './router-active';
-
-import { cccfixState } from '../services/cccfix.state';
+import { Component, Input } from '@angular/core';
 import { ytVideo } from './ytVideo/ytVideo.component';
 
-/*
- * App Component
- * Top Level Component
- */
 @Component({
   selector: 'video-container',
   pipes: [ ],
@@ -22,21 +9,23 @@ import { ytVideo } from './ytVideo/ytVideo.component';
   styles: [
     require('./videoContainer.css')
   ],
-  template:require('./videoContainer.html')
+  template: require('./videoContainer.html')
 })
 export class videoContainer {
+  @Input() code: string;
   videoLoading = false;
-  ytCode:string;
+  ytCode: string;
   constructor(
-    private state:cccfixState
-    ) {
-      this.ytCode = state.currentYtCode;
-  }
+    ) { }
 
   ngOnInit() {
     console.log('hello from cccfix videocontainer');
   }
-  processYtCode(code:string) {
+  ngOnChanges() {
+    console.log('videoContainer change');
+    this.ytCode = this.code;
+  }
+  processYtCode(code: string) {
     this.ytCode = code;
   }
 }

@@ -1,9 +1,9 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-//import { cccfixService } from '../cccfix.service';
+// import { cccfixService } from '../cccfix.service';
 // import { Home } from './home';
 // import { RouterActive } from './router-active';
 
@@ -19,18 +19,24 @@ import { Component } from '@angular/core';
   styles: [
     require('./captionsEditor.css')
   ],
-  template:require('./captionsEditor.html')
+  template: require('./captionsEditor.html')
 })
 export class captionsEditor {
-  loading = true;
-
+  @Input() subs: ROP.IXmlTranslation;
+  currentSubs: ROP.IXmlTranslation;
+  texts: ROP.IXmlTranslationTextString[];
   constructor(
-    ) {
-
-  }
+    ) { }
 
   ngOnInit() {
     console.log('hello from cccfix captions editor');
+  }
+  ngOnChanges() {
+    this.currentSubs = this.subs;
+    if (this.currentSubs){
+       console.log(this.currentSubs.transcript.text.length);
+       this.texts = this.currentSubs.transcript.text;
+    }
   }
 
 }

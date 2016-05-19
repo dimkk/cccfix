@@ -1,9 +1,8 @@
-<h2>Behold the Crowd Closed Captions Fixer</h2>
 <div class="card-container">
   <md-card>
-    <video-container></video-container>
+    <video-container code="{{internalCode}}"></video-container>
   </md-card>
   <md-card>
-    <captions-editor></captions-editor>
+    <captions-editor [subs]="internalSubs"></captions-editor>
   </md-card>
 </div>

@@ -2,15 +2,15 @@
  * Angular 2 decorators and services
  */
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RouteConfig, Router } from '@angular/router-deprecated';
+import { Http, Response } from '@angular/http';
+// import { RouteConfig, Router } from '@angular/router-deprecated';
 
-import { AppState } from './app.service';
-import { Home } from './home';
+// import { AppState } from './app.service';
+// import { Home } from './home';
 import { cccfixApp } from './cccfix';
 
-import { RouterActive } from './router-active';
-
-import { cccfixState } from './cccfix/services/cccfix.state';
+// import { RouterActive } from './router-active';
+import { appMockData } from './app.MockData';
 
 /*
  * App Component
@@ -19,8 +19,8 @@ import { cccfixState } from './cccfix/services/cccfix.state';
 @Component({
   selector: 'app',
   pipes: [ ],
-  providers: [ cccfixState ],
-  directives: [ RouterActive ],
+  providers: [ appMockData ],
+  directives: [ cccfixApp ],
   encapsulation: ViewEncapsulation.None,
   styles: [
     require('normalize.css'),
@@ -31,51 +31,92 @@ import { cccfixState } from './cccfix/services/cccfix.state';
       <md-toolbar color="primary">
           <span>{{ name }}</span>
           <span class="fill"></span>
-          <button md-button router-active [routerLink]=" ['Cccfix'] ">
-            cccfix
-          </button>
-          <button md-button router-active [routerLink]=" ['Home'] ">
-            Home
-          </button>
-          <button md-button router-active [routerLink]=" ['About'] ">
-            About
-          </button>
+           <button md-button (click)="selectYak()">
+           Yak
+           </button>
+           <button md-button (click)="selectYakS()">
+           Yak S
+           </button>
+           <button md-button (click)="selectYul()">
+           Yul
+           </button>
+           <button md-button (click)="selectYulS()">
+           Yul S
+           </button>
       </md-toolbar>
 
-      <md-progress-bar mode="indeterminate" color="primary" *ngIf="loading"></md-progress-bar>
-
-      <router-outlet></router-outlet>
-
-      <pre class="app-state">cccfix = {{ cccfix | json }}</pre>
-
+      <cccfix code="{{currentYtVideo?.code}}" [subs]="translation"></cccfix>     
+      
       <footer>
         <img [src]="angularclassLogo" width="6%">
-        WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>
+        Thanks - WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>
       </footer>
       </md-content>
   `
 })
-@RouteConfig([
-  { path: '/',      name: 'Cccfix', component: cccfixApp, useAsDefault: true },
-  { path: '/home',  name: 'Home',  component: Home },
-  // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
-  { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') }
-])
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
   loading = false;
-  name = 'Angular 2 Webpack Starter';
+  name = 'Crowd Closed Captions Fixer';
   url = 'https://twitter.com/AngularClass';
-
+  currentYtVideo: ROP.IYouTubeVideo;
+  translation: ROP.IXmlTranslation;
+  errorMessage: any;
+  private yak = '/assets/yak.json';
+  private yaks = '/assets/yak.s.json';
+  private yul = '/assets/yul.json';
+  private yuls = '/assets/yul.s.json';
   constructor(
-    public appState: AppState,
-    public cccfix: cccfixState
-    ) {
+    private data: appMockData
+    ) { }
 
+  selectYak() {
+    this.data.getMockData(this.yak)
+      .subscribe(
+        video => this.currentYtVideo = video,
+        error => this.errorMessage = <any>error,
+        () => {
+          console.log(this.currentYtVideo.code);
+          this.translation = this.currentYtVideo.translations[0].translation;
+        }
+      );
+  }
+  selectYakS() {
+    this.data.getMockData(this.yaks)
+      .subscribe(
+        video => this.currentYtVideo = video,
+        error => this.errorMessage = <any>error,
+        () => {
+          console.log(this.currentYtVideo.code);
+          this.translation = this.currentYtVideo.translations[0].translation;
+        }
+      );
+  }
+  selectYul() {
+    this.data.getMockData(this.yul)
+      .subscribe(
+        video => this.currentYtVideo = video,
+        error => this.errorMessage = <any>error,
+        () => {
+          console.log(this.currentYtVideo.code);
+          this.translation = this.currentYtVideo.translations[0].translation;
+        }
+      );
+  }
+  selectYulS() {
+    this.data.getMockData(this.yuls)
+      .subscribe(
+        video => this.currentYtVideo = video,
+        error => this.errorMessage = <any>error,
+        () => {
+          console.log(this.currentYtVideo.code);
+          this.translation = this.currentYtVideo.translations[0].translation;
+        }
+      );
   }
 
   ngOnInit() {
-    console.log('Initial cccfix State', this.cccfix);
+    this.selectYak();
   }
 
 }

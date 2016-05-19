@@ -118,3 +118,32 @@ interface Thenable<T> {
     onRejected?: (error: any) => void): Thenable<U>;
   catch<U>(onRejected?: (error: any) => U | Thenable<U>): Thenable<U>;
 }
+
+declare module ROP {
+    export interface IYouTubeVideo{
+        code:string;
+        title:string;
+        preview:string;
+        translations:IXmlTranslationContainer[];
+    }
+    export interface IXmlTranslationContainer {
+        language:string;
+        translation: IXmlTranslation
+    }
+    export interface IXmlTranslation{
+        transcript: IXmlTranslationText
+    }
+    export interface IXmlTranslationText{
+        text: IXmlTranslationTextString[]
+    }
+    export interface IXmlTranslationTextString{
+        "#text":string;
+        "@start":number;
+        "@dur":number;
+        //$:IXmlTranslationTextStringsTime
+    }
+    export interface IXmlTranslationTextStringsTime{
+        start:number,
+        dur:number
+    }
+}

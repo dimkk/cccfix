@@ -18,18 +18,20 @@ import { captionsEditor } from './captionsEditor/captionsEditor.component';
 @Component({
   selector: 'cccfix',
   pipes: [ ],
-  providers: [ cccfixData ],
+  providers: [ cccfixData, cccfixState ],
   directives: [ videoContainer, captionsEditor ],
   styles: [
     require('./cccfix.css')
   ],
-  template:require('./cccfix.html')
+  template: require('./cccfix.html')
 })
 
 
 export class cccfixApp {
-  @Input() code:string;
-  @Input() subTitiles:string;
+  @Input() code: string;
+  @Input() subs: ROP.IXmlTranslation;
+  internalCode: string;
+  internalSubs: ROP.IXmlTranslation;
   loading = true;
 
   constructor(
@@ -41,6 +43,13 @@ export class cccfixApp {
 
   ngOnInit() {
     console.log('hello from cccfix21');
+    console.log(`cccfix code - ` + this.code);
+  }
+  ngOnChanges() {
+    console.log('cccfix change');
+    this.internalCode = this.code;
+    this.internalSubs = this.subs;
+    console.log(`cccfix code - ` + this.code);
   }
 
 }

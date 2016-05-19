@@ -1,3 +1,8 @@
 <md-card-content>
-   this is editor container
+   <md-list>
+      <md-list-item *ngFor="let text of texts">
+        <h3 md-line>На {{text["@start"]}}, длится {{text["@dur"]}}</h3>
+        <p md-line class="demo-secondary-text">{{text["#text"]}}</p>
+      </md-list-item>
+    </md-list>
 </md-card-content>
