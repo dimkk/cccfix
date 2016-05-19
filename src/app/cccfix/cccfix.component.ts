@@ -1,7 +1,7 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { cccfixData } from './services/cccfix.data';
 import { cccfixState } from './services/cccfix.state';
@@ -25,7 +25,11 @@ import { captionsEditor } from './captionsEditor/captionsEditor.component';
   ],
   template:require('./cccfix.html')
 })
+
+
 export class cccfixApp {
+  @Input() code:string;
+  @Input() subTitiles:string;
   loading = true;
 
   constructor(
