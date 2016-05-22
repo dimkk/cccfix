@@ -1,10 +1,11 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component, Input } from '@angular/core';
+declare var $: any;
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
-// import { cccfixService } from '../cccfix.service';
-// import { Home } from './home';
+import { cccfixState } from '../services/cccfix.state';
+import { currentCap } from './pipes/currentCap.pipe';
 // import { RouterActive } from './router-active';
 
 /*
@@ -13,30 +14,58 @@ import { Component, Input } from '@angular/core';
  */
 @Component({
   selector: 'captions-editor',
-  pipes: [ ],
-  providers: [  ],
-  directives: [ ],
+  pipes: [currentCap],
+  providers: [],
+  directives: [],
   styles: [
     require('./captionsEditor.css')
   ],
-  template: require('./captionsEditor.html')
+  template: require('./captionsEditor.html'),
+  changeDetection: ChangeDetectionStrategy.CheckAlways
 })
 export class captionsEditor {
   @Input() subs: ROP.IXmlTranslation;
   currentSubs: ROP.IXmlTranslation;
   texts: ROP.IXmlTranslationTextString[];
+  currentTime: { time: number } = { time: 0 };
+  prevST: number = 0;
   constructor(
-    ) { }
+    private state: cccfixState,
+    private ref: ChangeDetectorRef
+  ) {
+    const self = this;
+    this.state.currentTime$.subscribe((newTime) => {
+      this.currentTime.time = newTime;
+      this.ref.markForCheck();
+      if (document.getElementsByClassName('subActive').length > 0) {
+        $('#captions').scrollTo($('.subActive'), 150);
+      };
+    });
+    setInterval(() => {
+      // stupid hack?!
+    }, 500);
+  }
 
   ngOnInit() {
     console.log('hello from cccfix captions editor');
   }
   ngOnChanges() {
     this.currentSubs = this.subs;
-    if (this.currentSubs){
-       console.log(this.currentSubs.transcript.text.length);
-       this.texts = this.currentSubs.transcript.text;
+    if (this.currentSubs) {
+      console.log(this.currentSubs.transcript.text.length);
+      this.texts = this.currentSubs.transcript.text;
     }
+  }
+
+  isSubActive(text: ROP.IXmlTranslationTextString): boolean {
+    let s = parseFloat(text['@start'].toString());
+    let e = parseFloat(text['@dur'].toString()) + s;
+    let v = parseFloat(this.currentTime.time.toString());
+    return v >= s && v <= e;
+  }
+  goToSubChunk(text: ROP.IXmlTranslationTextString): void {
+    this.state.clickedSubtitlesChunk$.emit(text['@start']);
+    this.currentTime.time = text['@start'];
   }
 
 }

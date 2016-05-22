@@ -21,7 +21,8 @@ import { captionsEditor } from './captionsEditor/captionsEditor.component';
   providers: [ cccfixData, cccfixState ],
   directives: [ videoContainer, captionsEditor ],
   styles: [
-    require('./cccfix.css')
+    require('./cccfix.css'),
+    require('flexboxgrid')
   ],
   template: require('./cccfix.html')
 })

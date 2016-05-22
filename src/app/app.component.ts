@@ -45,20 +45,11 @@ import { appMockData } from './app.MockData';
            </button>
       </md-toolbar>
 
-      <cccfix code="{{currentYtVideo?.code}}" [subs]="translation"></cccfix>     
+      <cccfix style="height:95%;" code="{{currentYtVideo?.code}}" [subs]="translation"></cccfix>     
       
-      <footer>
-        <img [src]="angularclassLogo" width="6%">
-        Thanks - WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>
-      </footer>
-      </md-content>
   `
 })
 export class App {
-  angularclassLogo = 'assets/img/angularclass-avatar.png';
-  loading = false;
-  name = 'Crowd Closed Captions Fixer';
-  url = 'https://twitter.com/AngularClass';
   currentYtVideo: ROP.IYouTubeVideo;
   translation: ROP.IXmlTranslation;
   errorMessage: any;

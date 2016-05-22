@@ -1,17 +1,2 @@
-<md-card-content>
-  <md-card>
-    <!--<p>
-       <md-input type="string"
-        placeholder="Enter youtube video code (some letters and digits)"
-        [value]="state.currentYtCode"
-        (keyup)="state.currentYtCode=$event.target.value"
-        (keyup.enter)="processYtCode($event.target.value)"
-        style="width:100%">
-      </md-input>
-    </p>-->
-    <p>
-      <!--<md-progress-circle *ngIf="videoLoading" style="margin:auto;" mode="indeterminate"></md-progress-circle>-->
-      <yt-video [code]="ytCode"></yt-video>
-    </p>
-  </md-card>
-</md-card-content>
+
+<yt-video [code]="ytCode" (currentTime)="emitCurrentTime($event)"></yt-video>

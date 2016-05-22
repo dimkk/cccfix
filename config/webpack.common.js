@@ -13,6 +13,8 @@ var CopyWebpackPlugin = (CopyWebpackPlugin = require('copy-webpack-plugin'), Cop
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
+var ProvidePlugin = require('webpack/lib/ProvidePlugin');
+
 /*
  * Webpack Constants
  */
@@ -199,7 +201,11 @@ module.exports = {
      * See: https://github.com/s-panferov/awesome-typescript-loader#forkchecker-boolean-defaultfalse
      */
     new ForkCheckerPlugin(),
-
+    new ProvidePlugin({    // <added>
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery'   // </added>
+    }),
     /*
      * Plugin: OccurenceOrderPlugin
      * Description: Varies the distribution of the ids to get the smallest id length

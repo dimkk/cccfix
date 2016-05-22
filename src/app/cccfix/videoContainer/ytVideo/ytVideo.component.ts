@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { cccfixState } from '../../services/cccfix.state';
 @Component({
@@ -8,61 +8,63 @@ import { cccfixState } from '../../services/cccfix.state';
 })
 export class ytVideo {
   @Input() code: string;
-  player: YT.Player;
+  playerTimeInterval: any;
+  @Output() currentTime: EventEmitter<number> = new EventEmitter<number>();
+  // player: YT.Player;
   ngOnInit() {
     console.log('hello from cccfix yt video');
     this.showPlayer();
+    this.state.clickedSubtitlesChunk$.subscribe((time) => {
+      this.state.currentYTPlayer.seekTo(time, true);
+    });
   }
   ngOnChanges() {
     console.log('ytVideo change');
-    if (this.player) {
-       this.player.loadVideoById(this.code);
+    if (this.state.currentYTPlayer) {
+      this.state.currentYTPlayer.loadVideoById(this.code);
+      this.state.currentYTPlayer.stopVideo();
     } else {
       this.showPlayer();
     }
   }
   showPlayer = () => {
     if (this.code) {
-      // 2. This code loads the IFrame Player API code asynchronously.
-      let tag = document.createElement('script');
-
-      tag.src = 'https://www.youtube.com/iframe_api';
-      let firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
       let player: YT.Player;
       window.onYouTubeIframeAPIReady = () => {
-        this.player = new YT.Player('player', {
+        this.state.currentYTPlayer = new YT.Player('player', {
           height: '390',
           width: '640',
           videoId: this.code,
           events: {
-            'onReady': onPlayerReady,
+            'onReady': this.onPlayerReady,
             'onStateChange': onPlayerStateChange
           }
         });
       };
-
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-      }
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      let done = false;
       function onPlayerStateChange(event) {
-        if (event.data === YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
-        }
-      }
-      function stopVideo() {
-        player.stopVideo();
+        // if (event.data === YT.PlayerState.PLAYING && !done) {
+        //   setTimeout(stopVideo, 6000);
+        //   done = true;
+        // }
       }
     }
   }
-  constructor() {}
+  onPlayerReady = (event) => {
+    if (!this.playerTimeInterval) {
+      this.playerTimeInterval = window.setInterval(() => {
+        if (this.state.currentYTPlayer.getPlayerState() === 1) {
+          let time = this.state.currentYTPlayer.getCurrentTime();
+          this.state.currentTime$.emit(time);
+        }
+      }, 500);
+    }
+  }
+  constructor(
+    private state: cccfixState
+  ) {
+    let tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    let firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
 }

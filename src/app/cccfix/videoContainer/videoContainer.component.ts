@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ytVideo } from './ytVideo/ytVideo.component';
 
 @Component({
@@ -13,6 +13,7 @@ import { ytVideo } from './ytVideo/ytVideo.component';
 })
 export class videoContainer {
   @Input() code: string;
+  @Output() currentTime: EventEmitter<number> = new EventEmitter<number>();
   videoLoading = false;
   ytCode: string;
   constructor(
@@ -27,6 +28,10 @@ export class videoContainer {
   }
   processYtCode(code: string) {
     this.ytCode = code;
+  }
+  emitCurrentTime($event: number) {
+    this.currentTime.emit($event);
+    console.log($event);
   }
 }
 

@@ -10,5 +10,8 @@
     "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526",
     "webpack": "registry:dt/webpack#1.12.9+20160321060707",
     "youtube": "registry:dt/youtube#0.0.0+20160317120654"
+  },
+  "dependencies": {
+    "iscroll": "registry:npm/iscroll#5.1.3+20160405061946"
   }
 }

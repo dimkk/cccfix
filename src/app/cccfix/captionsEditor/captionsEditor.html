@@ -1,8 +1,24 @@
-<md-card-content>
-   <md-list>
-      <md-list-item *ngFor="let text of texts">
-        <h3 md-line>На {{text["@start"]}}, длится {{text["@dur"]}}</h3>
-        <p md-line class="demo-secondary-text">{{text["#text"]}}</p>
-      </md-list-item>
-    </md-list>
+<!--<pre>{{currentTime.time}}</pre>-->
+<md-card-content id="captions" class="captions-container">
+  <md-card [ngClass]="{subActive:isSubActive(text)}" (click)="goToSubChunk(text)" *ngFor="let text of texts">
+    <md-card-title-group test="{{text['@start']}}">
+      <md-card-title>{{text["#text"]}}</md-card-title>
+      <md-card-subtitle>На {{text["@start"]}}, длится {{text["@dur"]}} </md-card-subtitle>
+
+    </md-card-title-group>
+  </md-card>
 </md-card-content>
+
+<script>
+
+</script>
+<style>
+  .subActive {
+    background: gray;
+  }
+  .captions-container{
+    overflow-y: scroll;
+    height: 95vh;
+    position: relative;
+  }
+</style>
