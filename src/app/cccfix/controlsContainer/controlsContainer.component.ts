@@ -44,15 +44,10 @@ export class controlsContainer {
 
   ngOnInit() {
     console.log('hello from contronsContainer');
-    this.playbackPause = this.state.editModePlaybackPause;
   }
   ngOnChanges() {
-    this.state.editModePlaybackPause = this.playbackPause;
   }
-  changePlayback() {
-    this.playbackPause = !this.playbackPause;
-    this.state.editModePlaybackPause = !this.state.editModePlaybackPause;
-  }
+
 }
 
 /*
