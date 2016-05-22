@@ -8,6 +8,7 @@ import { cccfixState } from './services/cccfix.state';
 
 import { videoContainer } from './videoContainer/videoContainer.component';
 import { captionsEditor } from './captionsEditor/captionsEditor.component';
+import { controlsContainer } from './controlsContainer/controlsContainer.component';
 // import { Home } from './home';
 // import { RouterActive } from './router-active';
 
@@ -19,7 +20,7 @@ import { captionsEditor } from './captionsEditor/captionsEditor.component';
   selector: 'cccfix',
   pipes: [ ],
   providers: [ cccfixData, cccfixState ],
-  directives: [ videoContainer, captionsEditor ],
+  directives: [ videoContainer, captionsEditor, controlsContainer ],
   styles: [
     require('./cccfix.css'),
     require('flexboxgrid')

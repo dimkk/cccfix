@@ -9,16 +9,19 @@ import { Pipe, PipeTransform } from '@angular/core';
  *   formats to: 1024
 */
 @Pipe({
-    name: 'currentCap',
+    name: 'getEnd',
     pure: false
 })
-export class currentCap implements PipeTransform {
-  transform(value: string, start: string, duration: string): string {
-      let s = parseFloat(start);
-      let e = parseFloat(duration) + s;
-      let v = parseFloat(value);
-    let result = 'iherit';
-    if (v >= s && v <= e) result = 'grey';
-    return result;
-  }
+export class getEnd implements PipeTransform {
+    transform(value: string, duration: string): any {
+        if (duration) {
+            let s = parseFloat(value);
+            let e = parseFloat(duration) + s;
+            return e.toFixed(3);
+        } else {
+            let s = parseFloat(value);
+            return s; // .toFixed(1);
+        }
+
+    }
 }

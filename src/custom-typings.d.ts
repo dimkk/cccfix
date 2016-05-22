@@ -140,6 +140,8 @@ declare module ROP {
         "#text":string;
         "@start":number;
         "@dur":number;
+        edit?:boolean;
+        active?:boolean;
         //$:IXmlTranslationTextStringsTime
     }
     export interface IXmlTranslationTextStringsTime{

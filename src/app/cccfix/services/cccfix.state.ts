@@ -17,6 +17,7 @@ export class cccfixState implements ICccfixState {
     public currentYTPlayer: YT.Player;
     public currentTime$:  EventEmitter<number> = new EventEmitter<number>();
     public clickedSubtitlesChunk$:  EventEmitter<number> = new EventEmitter<number>();
+    public editModePlaybackPause$: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor() {
 
     }

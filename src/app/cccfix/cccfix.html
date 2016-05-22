@@ -1,14 +1,13 @@
 <div style="height:100%" class="row main-container">
-  <md-card class="column-container col-xs-6">
+  <md-card class="column-container col-xs-12 col-sm-6">
     <video-container style="height:50%" class="box" code="{{internalCode}}"></video-container>
-    <div style="height:50%" class="box"></div>
+    <controls-container style="height:50%" class="box"></controls-container>
   </md-card>
-  <md-card class="column-container col-xs-6">
+  <div class="column-container col-xs-12 col-sm-6">
     <captions-editor class="box" [subs]="internalSubs"></captions-editor>
-  </md-card>
+  </div>
 </div>
 
 <style>
-  html,body,cccfix,main-container,column-container{ height:100%; }
-  
+
 </style>

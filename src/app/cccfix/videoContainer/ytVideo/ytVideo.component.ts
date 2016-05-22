@@ -56,7 +56,7 @@ export class ytVideo {
           let time = this.state.currentYTPlayer.getCurrentTime();
           this.state.currentTime$.emit(time);
         }
-      }, 500);
+      }, 100);
     }
   }
   constructor(

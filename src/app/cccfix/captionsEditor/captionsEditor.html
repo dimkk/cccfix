@@ -1,24 +1,58 @@
-<!--<pre>{{currentTime.time}}</pre>-->
-<md-card-content id="captions" class="captions-container">
-  <md-card [ngClass]="{subActive:isSubActive(text)}" (click)="goToSubChunk(text)" *ngFor="let text of texts">
-    <md-card-title-group test="{{text['@start']}}">
-      <md-card-title>{{text["#text"]}}</md-card-title>
-      <md-card-subtitle>На {{text["@start"]}}, длится {{text["@dur"]}} </md-card-subtitle>
-
-    </md-card-title-group>
-  </md-card>
-</md-card-content>
+<!-- email-tag  light-blue lighten-4  -->
+<ul class="collection captions-container" id="captions">
+  <li class="collection-item avatar email-unread valign-wrapper row captions-card" 
+    style="padding-bottom:3px;" [ngClass]="{subActive:text.active}"
+    *ngFor="let text of texts; let i = index">
+    <div class="col s12" (click)="goToSubChunk(text)">
+      <div class="row valign-wrapper">
+        <div class="valign left-align col s12">
+          <span *ngIf="!text.edit" 
+            class="" (click)="editCaption(text, $event, i)">{{text["#text"]}}</span>
+          <input *ngIf="text.edit" 
+            class="inp-{{i}}" id="{{text.edit ? 'activeInput' : 'no'}}" 
+              type="text" (click)="editCaption(text, $event, i)" 
+              (keyup.enter)="handleEnter(i, $event, text)" 
+              [(ngModel)]='text["#text"]'>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:0px;">
+        <div class="col s12 left-align">
+          <span class="grey-text small">начало - {{text["@start"]}}</span>
+          <span class="grey-text small">конец - {{text["@start"] | getEnd:text["@dur"]}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col s1 center-align actions">
+      <!--<i class="material-icons" (click)="text.edit = !text.edit">mode_edit</i>-->
+    </div>
+  </li>
+</ul>
 
 <script>
 
 </script>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <style>
-  .subActive {
-    background: gray;
+  .avatar {
+    padding-left: 0px !important;
   }
-  .captions-container{
+  
+  .actions {
+    display: none;
+  }
+  
+  /*.captions-card:hover .actions {
+    display: block;
+  }*/
+  
+  .subActive {
+    background: #009688 !important;
+  }
+  
+  .captions-container {
     overflow-y: scroll;
     height: 95vh;
     position: relative;
+    font-family:Roboto, "Helvetica Neue", sans-serif; 
   }
 </style>
