@@ -1,7 +1,7 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { cccfixData } from './services/cccfix.data';
 import { cccfixState } from './services/cccfix.state';
@@ -32,6 +32,8 @@ import { controlsContainer } from './controlsContainer/controlsContainer.compone
 export class cccfixApp {
   @Input() code: string;
   @Input() subs: ROP.IXmlTranslation;
+  @Output() subUpdated: EventEmitter<ROP.IXmlTranslationTextString> 
+    = new EventEmitter<ROP.IXmlTranslationTextString>();
   internalCode: string;
   internalSubs: ROP.IXmlTranslation;
   loading = true;
@@ -46,6 +48,11 @@ export class cccfixApp {
   ngOnInit() {
     console.log('hello from cccfix21');
     console.log(`cccfix code - ` + this.code);
+    
+    this.state.subtitleChunkUpdated$.subscribe((text: ROP.IXmlTranslationTextString) => {
+      this.subUpdated.emit(text);
+      console.log('emitting outside - ' + text);
+    });
   }
   ngOnChanges() {
     console.log('cccfix change');

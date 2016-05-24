@@ -2,7 +2,8 @@
  * Angular 2 decorators and services
  */
 declare var $: any;
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, 
+  ChangeDetectorRef, ElementRef } from '@angular/core';
 
 import { cccfixState } from '../services/cccfix.state';
 import { getEnd } from './pipes/currentCap.pipe';
@@ -33,12 +34,14 @@ export class captionsEditor {
   currentTime: { time: number } = { time: 0 };
   prevST: number = 0;
   currentEditIndex: any = -1;
+  // If true all next chunks will be in edit mode automatically
   editModePlayback: boolean = false;
+  // If true this will try to pause video if chunk in editmode
   editModePlaybackPause: boolean = false;
-
   constructor(
     private state: cccfixState,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private element: ElementRef
   ) {
     this.state.editModePlaybackPause$.subscribe((mode) => {
       this.editModePlaybackPause = mode;
@@ -50,17 +53,22 @@ export class captionsEditor {
     setInterval(() => {
       // stupid hack?!
     }, 100);
+    let el: HTMLElement =  this.element.nativeElement;
+    console.log($(el).find('#captions'));
+    $(el).find('ul').attr('style', `height:${state.captionsEditorDivHeight}px`);
+    //el.clientHeight = state.captionsEditorDivHeight;
   }
 
-  finishEdit(text: ROP.IXmlTranslationTextString, $event) {
-    console.log($event);
+  finishEdit(text: ROP.IXmlTranslationTextString) {
+    this.state.subtitleChunkUpdated$.emit(text);
   }
 
-  turnOffEdit(text: any, index) {
+  turnOffEdit(text: ROP.IXmlTranslationTextString, index) {
     this.texts[this.currentEditIndex].edit = false;
     this.currentEditIndex = -1;
     if (!this.editModePlaybackPause) this.editModePlayback = false;
-
+    console.log('in turn off edit');
+    this.finishEdit(text);
   }
 
   editCaption(text: ROP.IXmlTranslationTextString, $event, index) {
@@ -83,15 +91,18 @@ export class captionsEditor {
     }, 100);
   }
 
-  handleEnter(index, $event, text) {
+  public handleEnter(index, $event, text) {
     console.log('enter');
     if (!this.editModePlaybackPause) {
       if (text.edit) {
+        console.log('text.edit');
         this.turnOffEdit(text, index);
       } else {
+        console.log('!text.edit');
         this.editCaption(text, null, index);
       }
     } else {
+      console.log('this.editModePlaybackPause');
       this.state.currentYTPlayer.playVideo();
       this.handleTimeTick(this.currentTime);
     }
@@ -191,6 +202,7 @@ export class captionsEditor {
       this.currentTime.time = text['@start'];
     } else {
       text.edit = false;
+      this.editModePlayback = false;
     }
     this.state.currentYTPlayer.playVideo();
 

@@ -18,6 +18,10 @@ export class cccfixState implements ICccfixState {
     public currentTime$:  EventEmitter<number> = new EventEmitter<number>();
     public clickedSubtitlesChunk$:  EventEmitter<number> = new EventEmitter<number>();
     public editModePlaybackPause$: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public subtitleChunkUpdated$: EventEmitter<ROP.IXmlTranslationTextString> 
+        = new EventEmitter<ROP.IXmlTranslationTextString>();
+    public captionsEditorDivHeight = 500; 
+        
     constructor() {
 
     }

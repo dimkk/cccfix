@@ -45,7 +45,11 @@ import { appMockData } from './app.MockData';
            </button>
       </md-toolbar>
 
-      <cccfix style="height:95%;" code="{{currentYtVideo?.code}}" [subs]="translation"></cccfix>     
+      <cccfix
+         (subUpdated)=handleSubUpdate($event) 
+         style="height:95%;"
+         code="{{currentYtVideo?.code}}"
+         [subs]="translation"></cccfix>     
       
   `
 })
@@ -60,7 +64,9 @@ export class App {
   constructor(
     private data: appMockData
     ) { }
-
+  handleSubUpdate(text: ROP.IXmlTranslationTextString) {
+    console.log('got updated chunk - ' + text);
+  }
   selectYak() {
     this.data.getMockData(this.yak)
       .subscribe(

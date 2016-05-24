@@ -1,7 +1,8 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy,
+  ChangeDetectorRef, AfterViewInit } from '@angular/core';
 
 import { cccfixData } from '../services/cccfix.data';
 import { cccfixState } from '../services/cccfix.state';
@@ -15,9 +16,9 @@ import { cccfixState } from '../services/cccfix.state';
  */
 @Component({
   selector: 'controls-container',
-  pipes: [ ],
-  providers: [ ],
-  directives: [ ],
+  pipes: [],
+  providers: [],
+  directives: [],
   styles: [
     require('flexboxgrid')
   ],
@@ -26,15 +27,15 @@ import { cccfixState } from '../services/cccfix.state';
 })
 
 
-export class controlsContainer {
+export class controlsContainer implements AfterViewInit {
   currentSecond: number;
   playbackPause: boolean;
   constructor(
     private state: cccfixState,
     private ref: ChangeDetectorRef
-    ) {
-      this.state.currentTime$.subscribe((newTime) => {
-      this.currentSecond = newTime;  
+  ) {
+    this.state.currentTime$.subscribe((newTime) => {
+      this.currentSecond = newTime;
       this.ref.markForCheck();
     });
     setInterval(() => {
@@ -44,8 +45,16 @@ export class controlsContainer {
 
   ngOnInit() {
     console.log('hello from contronsContainer');
+    setTimeout(() => {
+      // $('#controlTooltip').tooltip({ delay: 50 });
+      // console.log($('#controlTooltip'));
+      // console.log($('#controlTooltip')).tooltip;
+    }, 0);
   }
   ngOnChanges() {
+  }
+  ngAfterViewInit() {
+
   }
 
 }

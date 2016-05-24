@@ -30,6 +30,7 @@ import '@angular2-material/toolbar';
 
 import 'jquery';
 import 'jquery.scrollto';
+import 'materialize-css';
 
 if ('production' === ENV) {
   // Production

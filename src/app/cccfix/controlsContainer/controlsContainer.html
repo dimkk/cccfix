@@ -1,14 +1,16 @@
 <md-card style="height:50vh;">
-    <md-card-subtitle>Текущая секунда - {{currentSecond}}</md-card-subtitle>
-    <md-card-title>Card with title</md-card-title>
+    <md-card-subtitle>Текущая секунда - {{currentSecond || 0}}</md-card-subtitle>
+    <md-card-title>Карточка управления</md-card-title>
     <md-card-content>
         <md-checkbox [(ngModel)]="isChecked" (change)="state.editModePlaybackPause$.emit(!isChecked)">
-            Использовать режим паузы
+            <!--Use pause regime, it will pause video near the end of current subtitles chunk if its in edit mode -->
+            Использовать режим паузы, этот режим будет пазуить видео примерно в конце текущего отрывка субтитров, в случае, если он будет в режиме редактирования
         </md-checkbox>
-
+        <!--<a id="controlTooltip" class="btn tooltipped" data-position="bottom"
+         data-delay="50" data-tooltip="I am tooltip">Hover me!</a>-->
     </md-card-content>
     <md-card-actions>
-        <button md-button>LIKE</button>
-        <button md-button>SHARE</button>
+        <!--<button md-button>LIKE</button>
+        <button md-button>SHARE</button>-->
     </md-card-actions>
 </md-card>

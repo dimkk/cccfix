@@ -4,7 +4,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { cccfixState } from '../../services/cccfix.state';
 @Component({
   selector: 'yt-video',
-  template: require('./ytVideo.html')
+  template: require('./ytVideo.html'),
+  styles: [
+    require('materialize-css/dist/css/materialize.css')
+  ]
 })
 export class ytVideo {
   @Input() code: string;
