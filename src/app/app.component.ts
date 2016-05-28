@@ -47,7 +47,7 @@ import { appMockData } from './app.MockData';
 
       <cccfix
          (subUpdated)=handleSubUpdate($event) 
-         style="height:95%;"
+         style="height:93%;width:99%"
          code="{{currentYtVideo?.code}}"
          [subs]="translation"></cccfix>     
       
