@@ -1,0 +1,7 @@
+cccfix:
+  environment:
+    - LETSENCRYPT_EMAIL=dimkk@outlook.com
+    - LETSENCRYPT_HOST=ccc.dimkk.ru
+    - VIRTUAL_HOST=ccc.dimkk.ru
+  image: 'dimkk/cccfix:latest'
+  restart: always
