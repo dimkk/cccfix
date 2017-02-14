@@ -85,7 +85,7 @@ export class captionsEditor {
 
     let getInputInterval = setInterval(() => {
       if (document.getElementsByClassName('inp-' + index).length > 0) {
-        document.getElementsByClassName('inp-' + index)[0].focus();
+        (<HTMLInputElement>document.getElementsByClassName('inp-' + index)[0]).focus();
         clearInterval(getInputInterval);
       }
     }, 100);
