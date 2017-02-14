@@ -1,5 +1,6 @@
 FROM nginx
 
-COPY ./dist /usr/share/nginx/html
+RUN npm install http-server -g \
+    & http-server dist
 
-EXPOSE 80
+EXPOSE 8080
