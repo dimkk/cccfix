@@ -33,23 +33,24 @@ export class ytVideo {
   showPlayer = () => {
     if (this.code) {
       let player: YT.Player;
-      window.onYouTubeIframeAPIReady = () => {
-        this.state.currentYTPlayer = new YT.Player('player', {
+      let that = this;
+      window.onYouTubeIframeAPIReady = function () {
+        that.state.currentYTPlayer = new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: this.code,
+          videoId: that.code,
           events: {
-            'onReady': this.onPlayerReady,
-            'onStateChange': onPlayerStateChange
+            'onReady': that.onPlayerReady
+            //'onStateChange': onPlayerStateChange
           }
         });
       };
-      function onPlayerStateChange(event) {
+      //function onPlayerStateChange(event) {
         // if (event.data === YT.PlayerState.PLAYING && !done) {
         //   setTimeout(stopVideo, 6000);
         //   done = true;
         // }
-      }
+      //}
     }
   }
   onPlayerReady = (event) => {
