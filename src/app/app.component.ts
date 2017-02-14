@@ -3,13 +3,8 @@
  */
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Http, Response } from '@angular/http';
-// import { RouteConfig, Router } from '@angular/router-deprecated';
-
-// import { AppState } from './app.service';
-// import { Home } from './home';
 import { cccfixApp } from './cccfix';
 
-// import { RouterActive } from './router-active';
 import { appMockData } from './app.MockData';
 
 /*
@@ -31,6 +26,9 @@ import { appMockData } from './app.MockData';
       <md-toolbar color="primary">
           <span>{{ name }}</span>
           <span class="fill"></span>
+          <button md-button (click)="selectPyh()">
+           Pyh
+           </button>
            <button md-button (click)="selectYak()">
            Yak
            </button>
@@ -61,11 +59,23 @@ export class App {
   private yaks = '/assets/yak.s.json';
   private yul = '/assets/yul.json';
   private yuls = '/assets/yul.s.json';
+  private pyh = '/assets/pyhal.json';
   constructor(
     private data: appMockData
     ) { }
   handleSubUpdate(text: ROP.IXmlTranslationTextString) {
     console.log('got updated chunk - ' + text);
+  }
+  selectPyh() {
+    this.data.getMockData(this.pyh)
+      .subscribe(
+        video => this.currentYtVideo = video,
+        error => this.errorMessage = <any>error,
+        () => {
+          console.log(this.currentYtVideo.code);
+          this.translation = this.currentYtVideo.translations[0].translation;
+        }
+      );
   }
   selectYak() {
     this.data.getMockData(this.yak)
@@ -113,7 +123,7 @@ export class App {
   }
 
   ngOnInit() {
-    this.selectYak();
+    this.selectPyh();
   }
 
 }
