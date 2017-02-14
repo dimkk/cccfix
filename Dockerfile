@@ -1,6 +1,5 @@
-FROM nginx
+FROM node
 
-RUN npm install http-server -g \
-    & http-server dist
-
+RUN npm install http-server -g 
+CMD ["http-server", "dist"]
 EXPOSE 8080
